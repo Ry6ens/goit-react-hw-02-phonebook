@@ -6,16 +6,10 @@ import { v4 as uuid } from "uuid";
 
 export class Form extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ],
     filter: "",
     name: "",
     number: "",
-    product: null,
+    product: [],
   };
 
   handleChange = (e) => {
@@ -33,14 +27,9 @@ export class Form extends Component {
       number: number,
     };
     console.log(obj);
-    this.setState({ product: obj });
-    // this.props.addNewContact(obj); // метод из App
-
-    // this.setState((prevState) => {
-    //   return {
-    //     contacts: [...prevState.contacts, obj],
-    //   };
-    // });
+    this.setState({ contacts: obj });
+    // метод из App
+    this.props.addNewContact(obj);
     this.resetForm();
   };
 
@@ -48,19 +37,18 @@ export class Form extends Component {
     this.setState({ ...this.state });
   };
 
+  prodIdForm = uuid();
   prodIdName = uuid();
   prodIdNumber = uuid();
+  prodIdFind = uuid();
 
   render() {
-    const { name, number, filter, contacts } = this.state;
-    const { prodIdName, handleChange, prodIdNumber } = this;
+    const { name, number } = this.state;
+    const { prodIdForm, prodIdName, prodIdNumber, handleChange, handleSubmit } =
+      this;
     return (
       <>
-        <form
-          className={styles.frame}
-          onSubmit={this.handleSubmit}
-          id={prodIdName}
-        >
+        <form className={styles.frame} onSubmit={handleSubmit} id={prodIdForm}>
           <label htmlFor={prodIdName}>Name</label>
           <input
             onChange={handleChange}
@@ -86,31 +74,6 @@ export class Form extends Component {
             required
           />
           <button type="submit">Add contact</button>
-        </form>
-        <form
-          className={styles.frame}
-          id={prodIdName}
-          onSubmit={this.handleSubmit}
-        >
-          <label htmlFor={prodIdNumber}>Find contacts by name</label>
-          <input
-            onChange={handleChange}
-            id={prodIdNumber}
-            className={styles.input}
-            type="filter"
-            name="filter"
-            value={filter}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-            required
-          />
-          <ul className={styles.items}>
-            {contacts.map((el) => (
-              <li id={prodIdNumber}>
-                {el.name}: {el.number}
-              </li>
-            ))}
-          </ul>
         </form>
       </>
     );
