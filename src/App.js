@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { Section } from "./components/section.js";
-import { Form } from "./components/form.js";
-import { Contacts } from "./components/contacts.js";
+import { ContactForm } from "./components/form.js";
+import { Filter } from "./components/filter.js";
+import { ContactsList } from "./components/contactList.js";
 
 class App extends Component {
   state = {
@@ -11,13 +12,36 @@ class App extends Component {
       { id: "id-3", name: "Eden Clements", number: "645-17-79" },
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
+    filter: "",
   };
 
-  addNewContact = (obj) => {
-    this.setState((prevState) => {
-      return {
-        contacts: [...prevState.contacts, obj],
+  addNewContact = (task) => {
+    const searchSameName = this.state.contacts
+      .map((cont) => cont.name)
+      .includes(task.name);
+
+    if (searchSameName) {
+      alert(`${task.name} is already in contacts`);
+    } else if (task.name.length === 0) {
+      alert("Fields must be filled!");
+    } else {
+      const obj = {
+        ...task,
+        // id: uuidv4(),
       };
+
+      this.setState((prevState) => {
+        return {
+          contacts: [...prevState.contacts, obj],
+        };
+      });
+    }
+  };
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
     });
   };
 
@@ -25,13 +49,18 @@ class App extends Component {
     return (
       <div className="App">
         <Section title="PhoneBook">
-          <Form addNewContact={this.addNewContact} />
+          <ContactForm addNewContact={this.addNewContact} />
         </Section>
         <Section title="Contacts">
-          <Contacts
+          <Filter
             contacts={this.state.contacts}
             id={this.prodIdFind}
-            filter={this.filter}
+            filter={this.state.filter}
+            handleChange={this.handleChange}
+          />
+          <ContactsList
+            contacts={this.state.contacts}
+            filter={this.state.filter}
           />
         </Section>
       </div>

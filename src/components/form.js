@@ -4,12 +4,10 @@ import styles from "./styles.module.css";
 import { Component } from "react";
 import { v4 as uuid } from "uuid";
 
-export class Form extends Component {
+export class ContactForm extends Component {
   state = {
-    filter: "",
     name: "",
     number: "",
-    product: [],
   };
 
   handleChange = (e) => {
@@ -26,10 +24,8 @@ export class Form extends Component {
       name: name,
       number: number,
     };
-    console.log(obj);
-    this.setState({ contacts: obj });
-    // метод из App
-    this.props.addNewContact(obj);
+    // this.setState({ contacts: obj });
+    this.props.addNewContact(obj); // метод из App
     this.resetForm();
   };
 
