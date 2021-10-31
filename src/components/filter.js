@@ -1,15 +1,9 @@
 import styles from "./styles.module.css";
 import { v4 as uuid } from "uuid";
+import PropTypes from "prop-types";
 
 export function Filter({ prodIdFind, filter, handleChange }) {
   prodIdFind = uuid();
-
-  //   handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     this.setState({
-  //       [name]: value,
-  //     });
-  //   };
 
   return (
     <form className={styles.contacts}>
@@ -28,3 +22,8 @@ export function Filter({ prodIdFind, filter, handleChange }) {
     </form>
   );
 }
+
+Filter.propTypes = {
+  filter: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};

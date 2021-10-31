@@ -1,5 +1,6 @@
 import styles from "./styles.module.css";
 import shortid from "shortid";
+import PropTypes from "prop-types";
 
 export function ContactsList({ contacts, filter, onRemoveContact }) {
   const filterPB = contacts.filter((contact) => {
@@ -25,3 +26,14 @@ export function ContactsList({ contacts, filter, onRemoveContact }) {
     </form>
   );
 }
+
+ContactsList.propTypes = {
+  filter: PropTypes.func.isRequired,
+  onRemoveContact: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+};
