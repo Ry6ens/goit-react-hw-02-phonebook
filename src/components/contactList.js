@@ -1,8 +1,7 @@
 import styles from "./styles.module.css";
 import shortid from "shortid";
 
-export function ContactsList({ contacts, filter, alert }) {
-  //   const alert = useAlert();
+export function ContactsList({ contacts, filter, onRemoveContact }) {
   const filterPB = contacts.filter((contact) => {
     return contact.name.toLowerCase().includes(filter.toLowerCase());
   });
@@ -13,6 +12,13 @@ export function ContactsList({ contacts, filter, alert }) {
         {filterPB.map((el) => (
           <li key={shortid.generate()}>
             {el.name}: {el.number}
+            <button
+              type="button"
+              className={styles.button__list}
+              onClick={() => onRemoveContact(el.id)}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>

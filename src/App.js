@@ -27,7 +27,6 @@ class App extends Component {
     } else {
       const obj = {
         ...task,
-        // id: uuidv4(),
       };
 
       this.setState((prevState) => {
@@ -42,6 +41,14 @@ class App extends Component {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
+    });
+  };
+
+  onRemoveContact = (e) => {
+    this.setState((prevState) => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== e),
+      };
     });
   };
 
@@ -61,6 +68,7 @@ class App extends Component {
           <ContactsList
             contacts={this.state.contacts}
             filter={this.state.filter}
+            onRemoveContact={this.onRemoveContact}
           />
         </Section>
       </div>

@@ -10,6 +10,16 @@ button {
   width: 100px;
 }
 
+.button {
+  margin-top: 10px;
+  width: 100px;
+}
+
+.button__list {
+  width: 60px;
+  margin-left: 10px;
+}
+
 label {
   margin-bottom: 10px;
 }
